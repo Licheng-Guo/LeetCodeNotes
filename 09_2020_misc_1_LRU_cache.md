@@ -1,5 +1,11 @@
 # 146. LRU Cache
 
+Core idea: First, we need a map to store the key-value mappings. Second, we need somethings to track which keys are not touched for a long time, thus when we need to evict a victim, we know whom to evict. 
+
+Thus we need a queue or list storing keys, and the back of the container is the oldest item. When we touch a key, we need to move it to the earliest position in the queue/list. 
+
+One clumsy way is to search for that node each time, which takes O(n) time. A better way is to have a mapping from key value to iterators, so that we can locate the node in O(1) time.
+
 The good thing about lists is that iterators are never invalidated by modifiers (unless erasing the element itself). This way, we can store the iterator to the corresponding LRU queue in the values of the hash map. Since using erase on a list with an iterator takes constant time, all operations of the LRU cache run in constant time.
 
 ```c++

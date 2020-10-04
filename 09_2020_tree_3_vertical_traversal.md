@@ -4,6 +4,7 @@
 class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
+        // clever use of nested maps
         map<int, map<int, set<int> > > nodes;
         
         traverse(root, 0, 0, nodes);

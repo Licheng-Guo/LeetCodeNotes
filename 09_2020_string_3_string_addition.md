@@ -12,6 +12,7 @@ public:
         int len1 = num1.length();
         int len2 = num2.length();
         if (len1 > len2) {
+            // padding a string
             num2.insert(num2.begin(), len1-len2, '0');
         }
         else if (len1 < len2) {

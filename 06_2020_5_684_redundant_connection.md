@@ -154,9 +154,33 @@ public:
 };
 ```
 
+The BFS could be simplified. No need to process the nodes in the current layer.
+
+```c++
+while (!q.empty()) {
+    int size = q.size();
+                
+    vector<int> candidates;
+    vector<int> gabage;
+    for (int i = 0; i < size; i++) {
+        int curr = q.front(); q.pop();
+        
+        assert(graph[curr].size() == 1);
+        
+        for (auto &n : graph[curr]) {
+            graph[n].erase(curr);
+            // graph[curr].erase(n); // *** dangerous ***
+            if (graph[n].size() == 1) {
+                q.push(n);
+            }                   
+        }
+    }
+}
+```
+
 ## Third Attempt Based on DFS
 
-Note that in undirected graph we don't need to differentiate cycle from reconvergent paths, thus we only need 1 bit for visitness.
+Note that in undirected graph we don't need to differentiate cycle from reconvergent paths, thus we only need 1 bit for visitness. However, in this case we need to record which nodes form a cycle.
 
 ```c++
 class Solution {
@@ -231,7 +255,8 @@ private:
             }
         }
         
-        visited[curr] = -1;
+        // also unnecessary
+        // visited[curr] = -1;
     }
     
     int merge_point = 0;

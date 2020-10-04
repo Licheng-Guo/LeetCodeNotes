@@ -57,6 +57,7 @@ private:
         }
         
         if (word[0] != '.') {
+            // note the use of substr. The second argument is the length
             return search(word.substr(1, word.length()-1), curr->children[word[0] - 'a']);
         }
         else {

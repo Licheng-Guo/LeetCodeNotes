@@ -133,7 +133,40 @@ The stack based approach can be optimized.
     }
 ```
 
-# Preorder Traversal
+## Better Implementation
+
+```c++
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        if (!root) return {};
+        
+        stack<TreeNode*> s;
+        pushAll(root, s);
+        
+        vector<int> ans;
+        while (!s.empty()) {
+            TreeNode *curr = s.top(); s.pop();
+            ans.push_back(curr->val);
+            curr = curr->right;
+            pushAll(curr, s);
+        }
+        
+        return ans;
+    }
+    
+private:
+    void pushAll(TreeNode *curr, stack<TreeNode*>& s) {
+        while (curr) {
+            s.push(curr);
+            curr = curr->left;
+        }
+    }
+};
+```
+
+
+# 144. Binary Tree Preorder Traversal
 
 ```c++
 /**
@@ -206,3 +239,40 @@ public:
     }    
 };
 ```
+
+## Better version
+
+```c++
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        if (!root) return {};
+        
+        stack<TreeNode*> s;
+        vector<int> ans;
+
+        pushAll(root, s, ans);
+        
+        while (!s.empty()) {
+            TreeNode *curr = s.top(); s.pop();
+            curr = curr->right;
+            pushAll(curr, s, ans);
+        }
+        
+        return ans;
+    }
+    
+private:
+    void pushAll(TreeNode *curr, stack<TreeNode*>& s, vector<int>& ans) {
+        while (curr) {
+            ans.push_back(curr->val);
+            s.push(curr);
+            curr = curr->left;
+        }
+    }
+};
+```
+
+# 145. Binary Tree Postorder Traversal
+
+First do rightward preorder traversal and reverse the answer.
