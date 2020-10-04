@@ -135,6 +135,7 @@ public:
         }
         
         // very clever!
+        // standard approach to compute intersection, should memorize
         while (index < intervals.size() && intervals[index][0] <= newInterval[1]) { // forgot the equal case
             newInterval[0] = min(intervals[index][0], newInterval[0]);
             newInterval[1] = max(intervals[index][1], newInterval[1]);

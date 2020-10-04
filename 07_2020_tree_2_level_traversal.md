@@ -1,5 +1,7 @@
+# 102. Binary Tree Level Order Traversal
 
-# Initial Attempt
+
+## Initial Attempt
 
 ```c++
 /**
@@ -115,7 +117,9 @@ def levelOrder(self, root):
     return ans
 ```
 
-## Bottom-up level traversal
+# 107. Binary Tree Level Order Traversal II
+
+Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
 
 - insert at the front is costly
 - it's ok to return a locally defined vector, as long as the return type is not referenced. The contents will be moved

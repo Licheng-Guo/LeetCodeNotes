@@ -60,6 +60,8 @@ class Solution {
 public:
     vector<string> findRepeatedDnaSequences(string s) {
         if (s.length() < 10 ) return {};
+
+        // how to initialize maps
         unordered_map<char, int> encode = {{'A',0}, {'C',1}, {'G',2}, {'T',3}};
         
         set<long long> counter;

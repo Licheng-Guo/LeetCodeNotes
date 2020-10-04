@@ -71,6 +71,8 @@ Given the root of a binary tree, find the maximum value V for which there exists
 
 (A node A is an ancestor of B if either: any child of A is equal to B, or any child of A is an ancestor of B.)
 
+Note that it is incorrect to find the global maximum node and the global minimum node, because they may not be in the same path.
+
 ## First Attempt
 
 ```c++
@@ -129,6 +131,8 @@ I think this is the best implementation. We just pass the current min/max to sub
 Compared to the diameter problem, another difference is that the solution of the sub-problems rely on the current min/max value. On the other hand, the diameter of sub-trees is independent of the outside structures or node value.
 
 I think this implemention works on any DAG.
+
+Note that it is very clever to pass by value instead of pass by reference. If we choose to pass by reference, we must restore to the previous mi/mx when backtracking. However, this is automatically achieved if we pass by value.
 
 ```c++
 class Solution {
