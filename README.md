@@ -13,3 +13,5 @@ Consider tree traversal in unusual order
 - Check if pop() is always on non-empty containers.
 - Be careful whether it is binary tree or binary search tree
 - Easy to forgot changing the iterator in while loops
+- Easy to get confused which container to use. E.g. while (!c.empty())
+- Don't forgot to advance pointer in linked list questions.
