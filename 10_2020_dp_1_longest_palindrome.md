@@ -4,6 +4,8 @@ Given a string s, return the longest palindromic substring in s.
 
 ## Reference Solution
 
+First determine the status of all 1-char sub-strings and 2-char sub-strings, then for each of them gradually grow outwards.
+
 ```c++
 class Solution {
 public:

@@ -22,6 +22,7 @@ public:
             pushAll(s, curr->right);
             
             // note that the modification should be after the pushAll
+            // No! Observe that the construction of the linked list only affects the left part of the current node, while for the traversal we will only touch the right part from now on. Thus it is safe to move the following part before the pushAll()
             curr->left = prev;
             if (prev) prev->right = curr;
             prev = curr;            
