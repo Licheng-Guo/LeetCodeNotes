@@ -38,6 +38,8 @@ public:
 
 First record the last existing position of each digit. Then starting from the MSB, for each digit larger than MSB, check if its last exsiting position is less significant than the MSB.
 
+Note that `break` only escapes one layer of loop.
+
 ```c++
 class Solution {
 public:

@@ -9,6 +9,8 @@ More formally, the probability of picking index i is w[i] / sum(w).
 
 ## First Attempt
 
+Seems that if the target of binary search is to locate one item, we probably should use `<=` in the while loop predicate. 
+
 ```c++
 class Solution {
 public:

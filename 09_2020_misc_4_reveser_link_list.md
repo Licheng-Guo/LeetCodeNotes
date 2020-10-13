@@ -39,3 +39,32 @@ public:
     }
 };
 ```
+
+Use a dummy header to make the code simpler. Note that for the last node (the original first node), we need to explicitly nullify its `next` field, which still points to the second node in the original linked list.
+
+```c++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head) return nullptr;
+        
+        stack<ListNode*> s;
+        
+        while (head) {
+            s.push(head);
+            head = head->next;
+        }
+        
+        ListNode *new_head = new ListNode();
+        ListNode *curr = new_head;
+        
+        while (!s.empty()) {
+            curr->next = s.top(); s.pop();
+            curr = curr->next; // forgot this
+        }
+        curr->next = nullptr; // this cannot be forgotten!
+        
+        return new_head->next;
+    }
+};
+```

@@ -69,6 +69,8 @@ Two major errors occur. First, to erase from the LRU list, we should erase using
 
 Second, to check whether a key exist in LRU, we should check using the hash map, which only takes O(1) time.
 
+To make the code clean, we use two helper functions `touch()` and `evict()`.
+
 ```c++
 class LRUCache {
 public:
@@ -114,6 +116,8 @@ private:
             lru.erase(key_to_pos[key]);
         }
         lru.push_front(key);
+
+        // when updating LRU, the mapping from key to LRU pos also needs updating
         key_to_pos[key] = lru.begin();
     }
     

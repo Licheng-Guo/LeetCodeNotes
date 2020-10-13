@@ -7,7 +7,7 @@ Some courses may have prerequisites, for example to take course 0 you have to fi
 Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
 
 ## Initial Attempt
-If we use DFS to detect loops in a graph, the implementation of `visited` is a little different from usual. When we backtrack, we must remove the current node from the `visited` set. This is because the "visited" set we need to know must be the ones that are in the same searching path as the current visiting node. In other words, we must distinguish cycles from reconvergent paths.
+If we use DFS to detect loops in a graph, the implementation of `visited` is a little different from usual. When we backtrack, we must remove the current node from the `visited` set. This is because the "visited" set we need to know must be the ones that are in the same searching path as the current visiting node. In other words, we must `distinguish cycles from reconvergent paths`.
 
 ```c++
 class Course {
@@ -108,7 +108,7 @@ def canFinish(self, numCourses, prerequisites):
 - if node v has been visited, then mark it as 1. If a vertex was marked as 1, then no ring contains v or its successors.
 
 My version:
-First, must remember to use reference when passing array. Second, in my initial attempt for optimization, I only start at those nodes that have zero indegrees. However, this is not enough because it is possible that the loop has no inbound connection fron the other part of the graph. The solution is to utilize the visiting status of the node.
+First, must remember to use reference when passing array. Second, in my initial attempt for optimization, I only start at those nodes that have zero indegrees. However, this is not enough because it is possible that the loop has no inbound connection from the other part of the graph. The solution is to utilize the visiting status of the node.
 
 ```c++
 class Solution {
@@ -223,7 +223,9 @@ The lesson of this solution is trying to look for equivalent properties of the p
 
 ## Another Sample Implementation
 
-BFS can also be utilized for topological sort
+BFS can also be utilized for topological sort. Notice here that when "removing" a node, we don't really need to remove it from the neighbor list of its neighbors. Simply decrementing the indegree will be enough. 
+
+In what cases should we actually remove one node from the neighbor lists? When we need to actually return the specific nodes. In this problem we only care about yes or no.
 
 ```c++
 bool canFinish(int n, vector<pair<int, int>>& pre) {

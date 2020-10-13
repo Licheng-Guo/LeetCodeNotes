@@ -4,9 +4,9 @@ Given a non-empty array containing only positive integers, find if the array can
 
 ## Reference Solution
 
-The brute-false way is to iterate through all possibilities, i.e. for each number, there are two choices whether taking it or not. To implement this one good way is to use recursion. Thus to compute whether the first `n` numbers can sum up to the target `t`, we first consider whether the n-th number is used. If the n-th number is used, then the problem becomes whether the first `n-1` numbers can sum up to `t - num[n]`; else the problem becomes if the first `n-1` numbers can sum up to `t`.
+The brute-force way is to iterate through all possibilities, i.e. for each number, there are two choices whether taking it or not. To implement this one good way is to use recursion. Thus to compute whether the first `n` numbers can sum up to the target `t`, we first consider whether the n-th number is used. If the n-th number is used, then the problem becomes whether the first `n-1` numbers can sum up to `t - num[n]`; else the problem becomes if the first `n-1` numbers can sum up to `t`.
 
-To implement this in a bottom-up fashion, we first compute for each target between `0` and `t`, if the first `i` numbers can sum up to each of them. Then we compute whether by adding the `i+1`-th number we can sum up to each of the target.
+To implement this in a bottom-up fashion, we first compute for each target between `0` and `t`, if the first `i` numbers can sum up to each target. Then we compute whether by adding the `i+1`-th number we can sum up to each of the target.
 
 ```c++
 class Solution {

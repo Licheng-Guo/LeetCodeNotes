@@ -186,3 +186,5 @@ public:
 ```
 
 The lesson is that we should remember the possibility of `post-order DFS`.
+
+Note that in this question we are allowed to visit the same vertex multiple times but each edge should only be visited once. We may also use a two-level map to track whether an edge has been visited before.

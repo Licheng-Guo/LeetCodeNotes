@@ -32,6 +32,8 @@ public:
         }
         
         while (!mystack.empty()) {
+
+            // how to erase one char from a string str.erase(pos, len)
             s.erase(mystack.top().second, 1);
             mystack.pop();
         }

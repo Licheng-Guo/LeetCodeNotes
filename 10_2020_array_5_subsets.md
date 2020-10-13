@@ -4,6 +4,8 @@ Given a set of distinct integers, nums, return all possible subsets (the power s
 
 ## First Attempt
 
+Initially I tried to first have all the placeholders ready and assign numbers into them. This is not good as it is complicated to switch the order of the placeholders.
+
 ```c++
 class Solution {
 public:

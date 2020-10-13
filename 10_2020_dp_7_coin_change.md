@@ -45,6 +45,10 @@ private:
 
 Feels similar to Djikstra's algorithm.
 
+Does the order of coins matter? I think not. The order of multiple paths reaching the same target does not matter.
+
+Add one type of coin at a time. For the current available coins, compute the solution for each target. Then with a new coins, update the solutions.
+
 ```python
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:

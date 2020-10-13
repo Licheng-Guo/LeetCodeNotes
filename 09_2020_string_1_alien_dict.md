@@ -48,6 +48,8 @@ private:
 
 ## Reference Implementation
 
+Note that when two strings have difference length, comparing contents is at a higher priority than comparing length. Thus we only compare length at the end when the previous contents of the two strings are matching.
+
 ```c++
 bool isAlienSorted(vector<string> &words, string order) {
     size_t indices[26]{};

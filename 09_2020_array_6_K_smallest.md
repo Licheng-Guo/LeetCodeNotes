@@ -41,6 +41,8 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
             r = p - 1;
         }
     }
+
+    // how to obtain a subset of a vector
     vector<vector<int> > res(points.begin(), points.begin()+K);
     return res;
 }

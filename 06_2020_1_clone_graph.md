@@ -85,6 +85,8 @@ Attempt 2: If in the routing we do the copy of the current node, instead of the 
 
 One tricky factor is the position of the line `cloned[orig] = copy`. My initial attempt is to put it after the for loop, which will result in infinite recursion. The lesson is to always check if the recursion condition has been taken care of prior to invoking the recursion routine. Another point is that here we blend two functions into the same code, thus increasing the possibility of error.
 
+In this case, the `cloned[]` map serves at the same time the function of visit checking, thus before we run into recursion, we should have marked the current node as visited, in other words add the cloned node into the mapping, although it is still not completed yet.
+
 ```c++
 class Solution {
 public:
@@ -210,6 +212,5 @@ public:
     }
 private:
     std::unordered_map<Node*, Node*> cloned;
-    std::set<Node*> visited;
 };
 ```

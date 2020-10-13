@@ -47,3 +47,5 @@ public:
     }
 };
 ```
+
+Actually this is not the most efficient way. Note that in this DP formulation, there isn't really saved computation. The better way is to iterate through the string, and for each character, set it as the center and expand on both sides.

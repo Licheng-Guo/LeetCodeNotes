@@ -61,3 +61,5 @@ public:
     }
 };
 ```
+
+I think we can also use DFS, searching from left to right, from up to down. Whenever we encounter an unvisited `1`, we search the maximum square with this `1` being the top left corner, then mark all encountered `1`s as visited?  No, this method is flawed, because we may wrongly mark an `1` as visited but it may be the top left corner of some larger square. If we do not mark for visitness, we may do lots of redundant work.

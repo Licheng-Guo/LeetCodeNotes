@@ -9,6 +9,8 @@ Note:
 
 ## First Attempt
 
+Note that here we are not doing tree traversal but BST look-up.
+
 ```c++
 class Solution {
 public:

@@ -2,6 +2,8 @@
 
 ## Reference Idea
 
+First convert the matrix into a vector of (row, col, val), then for each pair of nodes from the two vectors, try to do multiply-and-accumulation.
+
 ```c++
 class Elem {
 public:

@@ -215,11 +215,74 @@ public:
                 
                 for (auto &neighbor : graph[curr]) {
                     graph[neighbor].erase(curr); // unordered_set -> erase / insert
-                    remain--;      
+                          
                     if (graph[neighbor].size() == 1) {
                         q.push(neighbor);
                     }
                 }    
+
+                remain--;
+            }
+        }
+        
+        vector<int> result;
+        while (!q.empty()) {
+            result.push_back(q.front());
+            q.pop();
+        }
+        
+        return result;
+        
+    }
+};
+```
+
+# Final Version
+
+Actually in this case we do not really need to track the change in neighbors, but only need to track the indegree of each node.
+
+```c++
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        vector<unordered_set<int>> graph(n, unordered_set<int>());
+        vector<int> indegree(n, 0);
+        for (auto &e : edges) {
+            graph[e[0]].insert(e[1]);
+            graph[e[1]].insert(e[0]);
+            indegree[e[0]]++;
+            indegree[e[1]]++;
+        }
+        
+        queue<int> q;
+        int remain = n;
+        
+        if (n == 2) {return edges[0];}
+        if (n == 1) {return {0}; }
+        
+        for (int i = 0; i < n; i++) {
+            if (graph[i].size() == 1) {
+                q.push(i);
+            }
+        }
+        
+        while (!q.empty()) {
+            int size = q.size();
+            if (remain <= 2) { // cannot use queue size to determine if finished
+                break;
+            }
+            
+            for (int i = 0; i < size; i++) {
+                int curr = q.front(); q.pop();
+                
+                for (auto &neighbor : graph[curr]) {
+                    indegree[neighbor]--;
+                    indegree[curr]--;
+                    if (indegree[neighbor] == 1) {
+                        q.push(neighbor);
+                    }
+                }    
+                remain--;      
             }
         }
         
