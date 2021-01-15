@@ -143,3 +143,58 @@ public:
     }
 };
 ```
+
+## Attempt 3
+```c++
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.size() == 0) return {-1, -1};
+        int lower_bound = -1;
+        int upper_bound = -1;
+        
+        int lo = 0, hi = nums.size()-1;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] == target) {
+                hi = mid;
+            }
+            else if (nums[mid] > target) {
+                hi = mid - 1;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+
+        // assert(lo == hi); // wrongly put the assert before checkpoint the corner case
+        if (nums[lo] != target) return {-1, -1};
+        assert(lo == hi);
+
+        lower_bound = lo;
+        
+        //lo = 0;
+        hi = nums.size()-1;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2 + 1;
+            if (nums[mid] == target) {
+                lo = mid;
+            }
+            else if (nums[mid] > target) {
+                hi = mid - 1;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+        
+        assert(lo == hi);
+        assert(nums[lo] == target);
+        upper_bound = hi;
+        
+        return {lower_bound, upper_bound};
+    }
+};
+```
