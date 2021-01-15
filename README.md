@@ -16,7 +16,7 @@
 - Check variable by variable to see if anything is forgotten.
 - When multiple data structures are interacting with each other, check for every operation if any one of them is overlooked.
 - Many times the predicate of while loops contain boundary check when iterating through a container.
-
+- When using python, be careful if deep copy is needed when returning an attribute of a class. 
 
 # Solution Check List
 
