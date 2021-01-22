@@ -43,6 +43,43 @@ public:
 };
 ```
 
+## Another Attempt
+
+```c++
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode *dummy = new ListNode(-1);
+        ListNode *curr = dummy;
+        
+        while (l1 && l2) { // confused between && and &
+            if (l1->val < l2->val) {
+                curr->next = new ListNode(l1->val);
+                l1 = l1->next;
+                curr = curr->next;
+            }
+            else {
+                curr->next = new ListNode(l2->val);
+                l2 = l2->next;
+                curr = curr->next;
+            }
+        }
+        
+        if (l1 == nullptr) {
+            curr->next = l2;
+        }
+        else if (l2 == nullptr) {
+            curr->next = l1;
+        }
+        else {
+            assert(false);
+        }
+    
+        return dummy->next;
+    }  
+};
+```
+
 # 23. Merge k Sorted Lists
 
 ## First Attempt
@@ -168,6 +205,61 @@ public:
         }
         
         return ans->next;
+    }
+};
+```
+
+Try again the divide-and-conquer method.
+```c++
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        return _mergeKLists(lists, 0, lists.size()-1);
+    }
+
+private:
+    ListNode* _mergeKLists(vector<ListNode*>& lists, int start, int end) {
+        if (start > end) {
+            return nullptr;
+        }
+        else if (start == end) return lists[start];
+        else if (start + 1 == end) return(mergeTwoLists(lists[start], lists[end]));
+        else {
+            int mid = (start + end) / 2;
+            ListNode* sub1 = _mergeKLists(lists, start, mid);
+            ListNode* sub2 = _mergeKLists(lists, mid+1, end);
+            return mergeTwoLists(sub1, sub2);
+        }
+    }
+    
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode dummy(-1); // if we "new" a dummy, we need to free the memory before leaving
+        ListNode *curr = &dummy;
+        
+        while (l1 && l2) { // confused between && and &
+            if (l1->val < l2->val) {
+                curr->next = new ListNode(l1->val);
+                l1 = l1->next;
+                curr = curr->next;
+            }
+            else {
+                curr->next = new ListNode(l2->val);
+                l2 = l2->next;
+                curr = curr->next;
+            }
+        }
+        
+        if (l1 == nullptr) {
+            curr->next = l2;
+        }
+        else if (l2 == nullptr) {
+            curr->next = l1;
+        }
+        else {
+            assert(false);
+        }
+    
+        return dummy->next;
     }
 };
 ```

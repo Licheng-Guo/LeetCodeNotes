@@ -68,3 +68,63 @@ public:
     }
 };
 ```
+
+Attempt 2
+
+```c++
+ListNode* reverseList(ListNode* head) {        
+    if (head == nullptr) return nullptr;
+    
+    std::stack<ListNode*> s;
+    ListNode *curr = head;
+    while (curr) {
+        s.push(curr);
+        curr = curr->next;
+    }
+    
+    ListNode dummy;
+    curr = &dummy;
+    while (!s.empty()) {
+        curr->next = s.top(); s.pop();
+        curr = curr->next;
+    }
+    curr->next = nullptr; // forgot this
+    
+    return dummy.next;
+}
+```
+
+## Reference Solution 1
+
+```c++
+ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    
+    while (curr) {
+        ListNode *next = curr->next; // forgot this line
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    
+    return prev;
+}
+```
+
+## Reference Solution 2
+
+```c++
+ListNode* reverseList(ListNode* head) {        
+    if (head == nullptr) return nullptr;
+    else if (head->next == nullptr) return head;
+    else {
+        ListNode *new_head_of_sub = reverseList(head->next);
+        ListNode *new_tail_of_sub = head->next;
+        
+        head->next->next = head; 
+        head->next = nullptr; // forgot this one
+        return new_head_of_sub;
+    }
+}
+```
