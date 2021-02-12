@@ -95,3 +95,132 @@ int partition(vector<vector<int>>& points, int l, int r) {
     return r;
 }
 ```
+
+## Attempt 2
+
+In this implementation, I use the strategy to update the right pointer if the left side is larger than pivot and vice versa. This is less concise than update the left pointer when the left side is smaller than the pivot.
+
+```c++
+    bool operator<(const vector<int>& a, const vector<int>&b ) {
+        return a[0]*a[0] + a[1]*a[1] < b[0]*b[0] + b[1]*b[1];
+    }
+    bool operator>(const vector<int>& a, const vector<int>&b ) {
+        return b < a;
+    }
+    bool operator>=(const vector<int>& a, const vector<int>&b ) {
+        return !(a < b);
+    }
+    bool operator<=(const vector<int>& a, const vector<int>&b ) {
+        return !(a > b); // got this wrong
+    }
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        int left = 0;
+        int right = points.size()-1; // forgot the -1
+        
+        while (1) {
+            int p = _partition(points, left, right);
+            if (p == K-1) { // forgot the -1
+                return vector<vector<int> >(points.begin(), points.begin()+K); 
+            }
+            else if (p > K-1) {
+                right = p - 1;
+            }
+            else {
+                left = p + 1;
+            }
+        }
+    }
+    
+private:
+
+    int _partition(vector<vector<int> >& points, int left, int right) {
+        int pivot_idx = left;
+        vector<int>& pivot = points[pivot_idx];
+        left++;
+        
+        while (left <= right) {
+            if (points[left] <= pivot && points[right] >= pivot) {
+                left++; right--;
+            }
+            else if (points[left] > pivot && points[right] < pivot) {
+                swap(points[left], points[right]);
+                left++; right--;
+            }
+            else if (points[left] > pivot) {
+                // swap(points[left], points[right-1]); => segfault
+                right--;
+            }
+            else if (points[right] < pivot) {
+                // swap(points[right], points[left+1]); => segfault
+                left++;
+            }
+        }
+        
+        swap(points[pivot_idx],points[right]);
+        return right;
+    }
+};
+```
+
+An recursive implementation
+
+```c++
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        int left = 0;
+        int right = points.size()-1; 
+        return _kClosest(points, left, right, K);
+    }
+    
+    vec_t _kClosest(vector<vector<int>>& points, int left, int right, int K) {
+        
+        if (left > right) {return {}; }
+        if (left == right) {
+            assert(K == 1);
+            return vec_t(points.begin()+left, points.begin()+right+1);
+        }
+        
+        int p = _partition(points, left, right);
+
+        if (p-left == K-1) { // pay attention here! K is relative to left
+            return vec_t(points.begin()+left, points.begin()+p+1);
+        }
+        else if (p-left < K-1) {
+            vec_t part1 = vec_t(points.begin()+left, points.begin()+p+1);
+            vec_t part2 = _kClosest(points, p+1, right, K - (p-left+1) );
+            part1.insert(part1.end(), part2.begin(), part2.end());
+            return part1;
+        }
+        else {
+            return _kClosest(points, left, p-1, K);
+        }
+    }
+```
+
+Another definition of `K` that makes things more concise:
+```c++
+    vec_t _kClosest(vector<vector<int>>& points, int left, int right, int K) {        
+        if (left > right) {return {}; }
+        if (left == right) {
+            assert(K-1 == left);
+            return vec_t(points.begin()+left, points.begin()+right+1);
+        }
+        
+        int p = _partition(points, left, right);
+
+        if (p == K-1) {
+            return vec_t(points.begin()+left, points.begin()+p+1);
+        }
+        else if (p < K-1) {
+            vec_t part1 = vec_t(points.begin()+left, points.begin()+p+1);
+            vec_t part2 = _kClosest(points, p+1, right, K);
+            part1.insert(part1.end(), part2.begin(), part2.end());
+            return part1;
+        }
+        else {
+            return _kClosest(points, left, p-1, K);
+        }
+    }
+```

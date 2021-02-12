@@ -97,3 +97,47 @@ private:
     }
 };
 ```
+
+## Second Attempt
+
+```c++
+
+class BSTIterator {
+public:
+    BSTIterator(TreeNode* root) {
+        curr = root;
+        while (curr) {
+            s.push(curr);
+            curr = curr->left;
+        }
+    }
+    
+    ~BSTIterator() {
+        while (!s.empty()) {
+            s.pop();
+        }
+    }
+    
+    /** @return the next smallest number */
+    int next() {
+        TreeNode *curr = s.top(); s.pop();
+        int val = curr->val;
+        
+        curr = curr->right;
+        while (curr) {
+            s.push(curr);
+            curr = curr->left;
+        }
+        
+        return val;
+    }
+    
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+        return !s.empty();
+    }
+private:
+    stack<TreeNode*> s;
+
+};
+```
