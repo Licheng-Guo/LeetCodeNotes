@@ -65,3 +65,41 @@ void sortColors(int A[], int n) {
     for(int i = 0; i < num2; ++i) A[num0+num1+i] = 2;
 }
 ```
+
+
+## Attempt 2
+
+First partition the array based on "whether the number is greater than 0"; then partition the right part based on "whether the number is greater than 1".
+
+```c++
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        if (nums.size() == 0) return;
+        
+        int left = 0;
+        int right = nums.size() - 1;
+        
+        left = partition(nums, left, right, 0);
+        
+        partition(nums, left, right, 1);
+    }
+    
+private:
+    int partition(vector<int> &nums, int left, int right, int pivot) {
+        while (left <= right) {
+            if (nums[left] > pivot && nums[right] == pivot) {
+                swap(nums[left++], nums[right--]);
+            }
+            else if (nums[left] == pivot) {
+                left++;
+            }
+            else if (nums[right] > pivot) {
+                right--;
+            }
+        }
+        
+        return left;
+    }
+};
+```
